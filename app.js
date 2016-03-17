@@ -10,7 +10,15 @@ var books = require('./routes/books');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-mongoose.connect('mongodb://localhost/jwtauth');
+mongoose.connect('mongodb://wolly:41501art@ds015859.mlab.com:15859/jwtauth',{user: 'jwtauth', pass: '1111' });
+
+var conn = mongoose.connection;
+
+conn.on('error', console.error.bind(console, 'connection error:'));
+
+conn.once('open', function() {
+  // Wait for the database connection to establish, then start the app.
+});
 
 var app = express();
 
