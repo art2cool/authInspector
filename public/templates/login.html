@@ -1,0 +1,15 @@
+<div class="container">
+    <h2>login form</h2>
+    <br>
+    <form ng-submit="LogCtrl.submit()">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="LogCtrl.user.email">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password" ng-model="LogCtrl.user.password">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>

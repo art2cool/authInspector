@@ -1,0 +1,19 @@
+<div class="container">
+    <h2>Registration form</h2>
+    <br>
+    <form ng-submit="RegCtrl.submit()">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="RegCtrl.user.email">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password" ng-model="RegCtrl.user.password">
+        </div>
+        <div class="form-group">
+            <label for="confirmInputPassword">Password</label>
+            <input type="password" class="form-control" id="confirmInputPassword" placeholder="Confirm Password" ng-model="RegCtrl.user.password2">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>

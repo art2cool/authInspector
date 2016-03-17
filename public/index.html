@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" ng-app="MyApp">
+<head>
+
+  <title>The HTML5 Herald</title>
+
+  <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+  <script src="/jquery/dist/jquery.js"> </script>
+  <script src="/bootstrap/dist/js/bootstrap.js"> </script>
+  <script src="/angular/angular.js"> </script>
+  <script src="/angular-ui-router/release/angular-ui-router.js"> </script>
+</head>
+
+<body>
+  <div ui-view="header"></div>
+  <div ui-view="content"></div>
+
+  <script src="/javascripts/app.js"></script>
+  <script src="/javascripts/services/authToken.service.js"></script>
+  <script src="/javascripts/services/authinspector.service.js"></script>
+  <script src="/javascripts/configs/ui-router.config.js"></script>
+  <script src="/javascripts/controllers/header.controller.js"></script>
+  <script src="/javascripts/controllers/main.controller.js"></script>
+  <script src="/javascripts/controllers/register.controller.js"></script>
+  <script src="/javascripts/controllers/users.controller.js"></script>
+  <script src="/javascripts/controllers/login.controller.js"></script>
+
+
+  <script src="/javascripts/apis/user-api.js"></script>
+</body>
+</html>
