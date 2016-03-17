@@ -27,7 +27,6 @@ function isAuthorised(req, res, next) {
 
                 RegisteredUser.getUserById(decoded.id, function(err, user) {
                     if (user) {
-                        console.log(user);
                         var newToken = createToken(user._id);
                         next();
 
@@ -46,7 +45,6 @@ function isAuthorised(req, res, next) {
 
 router.post('/register', function(req, res) {
 
-    console.log(req.body.user);
     var user = {};
 
     user.email = req.body.user.email;
@@ -82,7 +80,6 @@ router.post('/register', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
-    console.log(req.body.user);
 
     var user = {};
     user.email = req.body.user.email;
@@ -101,11 +98,9 @@ router.post('/login', function(req, res) {
                     autoriseUser(userDB, function(err, user) {
                         if (err) throw err;
 
-                        console.log('user logined');
                         res.status(202).send(user.token);
                     });
                 } else {
-                    console.log('invalid login or password');
                     res.status(401).send('invalid login or password');
                 }
 
@@ -143,7 +138,6 @@ function autoriseUser(user, callback) {
             RegisteredUser.createRegisteredUser(newRegisteredUser, callback);
         } else {
             RegisteredUser.updateToken(logedUser._id, token, callback);
-        console.log('crreate new user');
         }
     });
 
