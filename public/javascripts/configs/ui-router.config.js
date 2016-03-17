@@ -43,14 +43,7 @@ angular.module('MyApp').config(['$stateProvider', '$urlRouterProvider', '$httpPr
             resolve: {
                 user: ['UserApi', function (UserApi) {
                     return UserApi.search({});
-                }],
-                timeout: ['$timeout', '$q', function ($timeout, $q) {
-                    var defered = $q.defer();
-                    $timeout(function () {
-                        defered.resolve();
-                    }, 2000);
-                    return defered.promise;
-                }]
+                }]                
             }
         })
         .state('login', {
