@@ -8,7 +8,6 @@ var userModel = new Schema({
     _id: {type: ObjectId},
     email: {type: String},
     role: {type: String, default: 'itern'},
-    password: {type: String},
     token: {type: String}
 });
 

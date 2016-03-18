@@ -42,7 +42,12 @@ module.exports.commparePassword = function(candidatePassword, hash, callback) {
     });
 };
 
-
 module.exports.getAllUser = function(query, callback) {
-    User.find(query, callback);
+    var q = {role: {$not: /admin/} };
+    User.find(q, callback);
+};
+
+
+module.exports.removeUser = function(id, callback) {
+    User.findOneAndRemove({_id: id}, callback);
 };

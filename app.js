@@ -12,6 +12,8 @@ var users = require('./routes/users');
 
 mongoose.connect('mongodb://wolly:41501art@ds015859.mlab.com:15859/jwtauth',{user: 'jwtauth', pass: '1111' });
 
+//mongoose.connect('mongodb://localhost/jwtauth');
+
 var conn = mongoose.connection;
 
 conn.on('error', console.error.bind(console, 'connection error:'));

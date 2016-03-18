@@ -11,12 +11,13 @@ angular.module('MyApp')
                 return config;
             },
             response: function(response) {
-        //        console.log('unauthorised AuthInspector', response);
+
 
                 return response;
             },
             responseError: function (responseError) {
                 if(responseError.status === 401) {
+                    AuthToken.removeToken();
                        $injector.get('$state').transitionTo('login');
                        return $q.reject(responseError);
                    }

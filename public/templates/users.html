@@ -1,5 +1,6 @@
 <div class="container">
     <ul class="list-group">
-        <li class="list-group-item" ng-repeat="user in UsersCtrl.users">{{user.email}}</li>
+        <li class="list-group-item" ng-repeat="user in UsersCtrl.users">{{user.email}} <div class="btn btn-xs btn-danger" style="display: block; float: right" ng-if="UsersCtrl.isAdmin" ng-click="UsersCtrl.removeUser(user)">remove</div></li>
     </ul>
+
 </div>

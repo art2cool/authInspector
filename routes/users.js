@@ -9,39 +9,10 @@ var secret = 'superSecret';
 /* GET users listing. */
 router.get('/', isAuthorised, function(req, res, next) {
     var query = {};
-    User.getAllUser(query, function (err, users) {
+    User.getAllUser(query, function(err, users) {
         res.status(200).send(users);
     });
 });
-
-// cheking is authentificated token
-function isAuthorised(req, res, next) {
-
-    if (req.headers.authorization) {
-
-        var token = req.headers.authorization.split(' ')[1];
-        jwt.verify(token, secret, function(err, decoded) {
-            if (err) {
-                res.status(401).send('token is expired');
-            } else {
-
-                RegisteredUser.getUserById(decoded.id, function(err, user) {
-                    if (user) {
-                        var newToken = createToken(user._id);
-                        next();
-
-                    } else {
-                        res.status(401).send('unauthorised user');
-                    }
-
-                });
-            }
-
-        });
-    } else {
-        res.status(401).send('unauthorised user');
-    }
-}
 
 router.post('/register', function(req, res) {
 
@@ -71,7 +42,7 @@ router.post('/register', function(req, res) {
                         if (err) throw err;
 
                         console.log('user logined');
-                        res.status(202).send(user.token);
+                        res.status(202).send(user);
                     });
                 });
             }
@@ -98,7 +69,7 @@ router.post('/login', function(req, res) {
                     autoriseUser(userDB, function(err, user) {
                         if (err) throw err;
 
-                        res.status(202).send(user.token);
+                        res.status(202).send(user);
                     });
                 } else {
                     res.status(401).send('invalid login or password');
@@ -122,16 +93,53 @@ router.post('/logout', function(req, res) {
 
 });
 
+router.delete('/:id', isAdmin, function(req, res) {
+    var userId = req.params.id;
+    User.removeUser(userId, function(err) {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+
+            res.status(204).send('user removed');
+        }
+    });
+});
+// cheking is authenticated token
+function isAuthorised(req, res, next) {
+
+    if (req.headers.authorization) {
+
+        var token = req.headers.authorization.split(' ')[1];
+        jwt.verify(token, secret, function(err, decoded) {
+            if (err) {
+                res.status(401).send('token is expired');
+            } else {
+                RegisteredUser.getUserById(decoded.id, function(err, user) {
+                    if (user) {
+                        var newToken = createToken(user._id);
+                        next();
+
+                    } else {
+                        res.status(401).send('unauthorised user');
+                    }
+                });
+            }
+        });
+
+    } else {
+        res.status(401).send('unauthorised user');
+    }
+}
 
 function autoriseUser(user, callback) {
     var token = createToken({
         id: user._id
     });
 
-    RegisteredUser.getUserById(user._id, function (err, logedUser) {
-        if(err) throw err;
+    RegisteredUser.getUserById(user._id, function(err, logedUser) {
+        if (err) throw err;
 
-        if(!logedUser){
+        if (!logedUser) {
             var newRegisteredUser = new RegisteredUser(user);
             newRegisteredUser.token = token;
 
@@ -150,6 +158,40 @@ function createToken(id) {
         secret, {
             expiresIn: "10h"
         });
+
+}
+
+function isAdmin (req, res, next) {
+
+    if (req.headers.authorization) {
+
+        var token = req.headers.authorization.split(' ')[1];
+        jwt.verify(token, secret, function(err, decoded) {
+            if (err) {
+                res.status(401).send('token is expired');
+            } else {
+                RegisteredUser.getUserById(decoded.id, function(err, user) {
+                    if (user) {
+                        //TODO refresh token
+
+                        var newToken = createToken(user._id);
+
+                        if(user.role === 'admin'){
+                            next();
+                        } else {
+                            res.status(403).send('you have no premision for that');
+                        }
+
+                    } else {
+                        res.status(401).send('unauthorised user');
+                    }
+                });
+            }
+        });
+
+    } else {
+        res.status(401).send('unauthorised user');
+    }
 
 }
 
